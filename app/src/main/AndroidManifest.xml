@@ -6,6 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".LabsApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAndroidLabs.NoActionBar">
@@ -28,6 +29,14 @@
             android:name=".ui.compose.MainActivity"
             android:exported="true"
             android:label="@string/app_name"></activity>
+
+
+        <receiver android:name=".LabsBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.nosorae.labs.MY_NOTIFICATION"/>
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
