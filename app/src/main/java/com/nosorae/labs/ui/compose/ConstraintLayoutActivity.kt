@@ -67,6 +67,7 @@ class ConstraintLayoutActivity : ComponentActivity() {
 
 
 
+
     }
 
     private fun sendBroadcastMessage(message: String) {
@@ -78,6 +79,5 @@ class ConstraintLayoutActivity : ComponentActivity() {
         }
         val isOk = LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
         Log.d("labslogtag", "sendBroadcastMessage isOk : $isOk")
-
     }
 }
