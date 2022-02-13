@@ -1,6 +1,10 @@
 package com.nosorae.labs.ui.compose
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -59,6 +63,47 @@ class MainActivity : ComponentActivity() {
                 Text(text = "hello snackbar")
             }
         }
+    }
+
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        printLog("2 onCreateView")
+        return super.onCreateView(name, context, attrs)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        printLog("2 onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        printLog("2 onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        printLog("2 onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        printLog("2 onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        printLog("2 onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        printLog("2 onDestroy")
+    }
+
+
+    private fun printLog(message: String) {
+        Log.e("activity's lifecylce", message)
     }
 }
 

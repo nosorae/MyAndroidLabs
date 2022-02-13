@@ -1,8 +1,11 @@
 package com.nosorae.labs.ui.compose
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -24,6 +27,7 @@ import java.lang.Thread.sleep
 class ConstraintLayoutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        printLog("1 onCreate")
         setContent {
             val constraints = ConstraintSet {
                 val greenBox = createRefFor("greenBox")
@@ -53,20 +57,14 @@ class ConstraintLayoutActivity : ComponentActivity() {
                     .layoutId("greenBox")
                 )
                 Button(modifier = Modifier.layoutId("redBox"), onClick = {
-                    Log.d("labslogtag", "onClick")
-                    sendBroadcastMessage("sorae")
+                    startActivity(Intent(this, MainActivity::class.java))
+                    //sendBroadcastMessage("sorae")
                 }) {
 
                 }
 
             }
         }
-
-
-
-
-
-
 
     }
 
@@ -79,5 +77,49 @@ class ConstraintLayoutActivity : ComponentActivity() {
         }
         val isOk = LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
         Log.d("labslogtag", "sendBroadcastMessage isOk : $isOk")
+    }
+
+
+    /**
+     * lifecycle test
+     */
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        printLog("1 onCreateView")
+        return super.onCreateView(name, context, attrs)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        printLog("1 onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        printLog("1 onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        printLog("1 onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        printLog("1 onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        printLog("1 onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        printLog("1 onDestroy")
+    }
+
+
+    private fun printLog(message: String) {
+        Log.e("activity's lifecylce", message)
     }
 }
