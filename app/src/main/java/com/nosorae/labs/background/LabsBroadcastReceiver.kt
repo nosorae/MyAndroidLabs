@@ -1,4 +1,4 @@
-package com.nosorae.labs
+package com.nosorae.labs.background
 
 import android.content.BroadcastReceiver
 import android.content.Context

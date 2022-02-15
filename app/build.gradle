@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt' // for hilt, ~
+    id 'dagger.hilt.android.plugin' // for hilt
 }
 
 android {
@@ -67,4 +69,10 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:1.0.5"
 
     implementation "androidx.compose.foundation:foundation:1.2.0-alpha02"
+
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
+
+
+
 }
