@@ -11,6 +11,8 @@ import dagger.hilt.android.HiltAndroidApp
 class LabsApplication: Application() {
     val br = LabsBroadcastReceiver()
     val filter = IntentFilter("com.nosorae.labs.MY_NOTIFICATION")
+
+
     override fun onCreate() {
         super.onCreate()
         Log.d("labslogtag", "onCreate LabsApplication")
