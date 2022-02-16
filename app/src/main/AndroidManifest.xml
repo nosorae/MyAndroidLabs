@@ -3,13 +3,22 @@
     package="com.nosorae.labs">
 
     <application
+        android:name=".LabsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".LabsApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAndroidLabs.NoActionBar">
+        <activity
+            android:name=".di_test.hilt.presentation.HiltTestActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.compose.ConstraintLayoutActivity"
             android:exported="true">
@@ -19,21 +28,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ui.compose.ListActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.compose.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
 
-
-        <receiver android:name=".background.LabsBroadcastReceiver" android:exported="true">
+        <receiver
+            android:name=".background.LabsBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.nosorae.labs.MY_NOTIFICATION"/>
+                <action android:name="com.nosorae.labs.MY_NOTIFICATION" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
