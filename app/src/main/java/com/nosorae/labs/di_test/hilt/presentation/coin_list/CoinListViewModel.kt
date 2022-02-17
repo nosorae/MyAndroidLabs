@@ -1,13 +1,12 @@
 package com.nosorae.labs.di_test.hilt.presentation.coin_list
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nosorae.labs.di_test.hilt.common.Resource
 import com.nosorae.labs.di_test.hilt.domain.use_case.get_coin.GetCoinsUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -16,8 +15,8 @@ class CoinListViewModel @ViewModelInject constructor(
     private val getCoinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(CoinListState())
-    val state: State<CoinListState> = _state
+    private val _state = MutableLiveData<CoinListState>(CoinListState.UnInitialized)
+    val state: LiveData<CoinListState> = _state
 
     init {
         getCoins()
@@ -27,13 +26,15 @@ class CoinListViewModel @ViewModelInject constructor(
         getCoinsUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
-                    _state.value = CoinListState(coins = result.data ?: emptyList())
+                    result.data?.let { list ->
+                        _state.value =  CoinListState.Success(list)
+                    }
                 }
                 is Resource.Loading -> {
-                    _state.value = CoinListState(error = result.message ?: "An unexpected error occured")
+                    _state.value = CoinListState.Loading
                 }
                 is Resource.Error -> {
-                    _state.value = CoinListState(isLoading = true)
+                    _state.value = CoinListState.Error(result.message ?: "예상치 못한 에러 발생")
                 }
             }
         }.launchIn(viewModelScope) // flows are asynchronous so we launch it in the ViewModel scope

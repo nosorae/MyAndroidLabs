@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".di_test.hilt.presentation.coin_detail.CoinDetailActivity">
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
