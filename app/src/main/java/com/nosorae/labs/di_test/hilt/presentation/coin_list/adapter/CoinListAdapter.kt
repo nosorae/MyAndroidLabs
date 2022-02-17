@@ -1,12 +1,15 @@
 package com.nosorae.labs.di_test.hilt.presentation.coin_list.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nosorae.labs.databinding.RvItemCoinListBinding
 import com.nosorae.labs.di_test.hilt.domain.model.Coin
 
-class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
+class CoinListAdapter(
+    private val onClickCoin: () -> String
+): RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
 
     private var coins = mutableListOf<Coin>()
 
@@ -26,6 +29,8 @@ class CoinListAdapter: RecyclerView.Adapter<CoinListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = coins.size
 
     fun addList(list: List<Coin>) {
+        Log.d("asdf", "$list")
         coins.addAll(list)
+        notifyDataSetChanged()
     }
 }

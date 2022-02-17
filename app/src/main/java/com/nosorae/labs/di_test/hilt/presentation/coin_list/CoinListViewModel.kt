@@ -1,17 +1,19 @@
 package com.nosorae.labs.di_test.hilt.presentation.coin_list
 
-import androidx.hilt.lifecycle.ViewModelInject
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nosorae.labs.di_test.hilt.common.Resource
 import com.nosorae.labs.di_test.hilt.domain.use_case.get_coin.GetCoinsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-
-class CoinListViewModel @ViewModelInject constructor(
+@HiltViewModel
+class CoinListViewModel @Inject constructor(
     private val getCoinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
 
@@ -26,14 +28,17 @@ class CoinListViewModel @ViewModelInject constructor(
         getCoinsUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
+                    Log.d("asdf", "${result.data}")
                     result.data?.let { list ->
                         _state.value =  CoinListState.Success(list)
                     }
                 }
                 is Resource.Loading -> {
+                    Log.d("asdf", "loading")
                     _state.value = CoinListState.Loading
                 }
                 is Resource.Error -> {
+                    Log.d("asdf", "${result.message}")
                     _state.value = CoinListState.Error(result.message ?: "예상치 못한 에러 발생")
                 }
             }
