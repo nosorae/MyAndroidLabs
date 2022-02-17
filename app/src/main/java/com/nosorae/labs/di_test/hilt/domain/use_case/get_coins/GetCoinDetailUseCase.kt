@@ -12,7 +12,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCoinsUseCase @Inject constructor(
+class GetCoinDetailUseCase @Inject constructor(
     private val repository: CoinRepository
 ) {
     // override invoke operator function
