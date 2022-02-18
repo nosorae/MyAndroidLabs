@@ -21,7 +21,7 @@ class CoinDetailActivity : AppCompatActivity() {
     }
     private fun observeState() {
         viewModel.state.observe(this) { state ->
-            Log.e(PARAM_COIN_ID, state.toString())
+            binding.tvCoinDetail.text = state.coin.toString()
         }
     }
 }

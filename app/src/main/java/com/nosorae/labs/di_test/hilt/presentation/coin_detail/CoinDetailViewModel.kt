@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.nosorae.labs.di_test.hilt.common.Constant.PARAM_COIN_ID
 import com.nosorae.labs.di_test.hilt.common.Resource
+import com.nosorae.labs.di_test.hilt.domain.model.CoinDetail
 import com.nosorae.labs.di_test.hilt.domain.use_case.get_coins.GetCoinDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -21,7 +22,6 @@ class CoinDetailViewModel @Inject constructor(
     val state: LiveData<CoinDetailState> = _state
 
     init {
-        Log.e(PARAM_COIN_ID, "init")
         savedStateHandle.get<String>(PARAM_COIN_ID)?.let { coinId ->
             Log.e(PARAM_COIN_ID, coinId)
             getCoinDetail(coinId)
@@ -32,7 +32,6 @@ class CoinDetailViewModel @Inject constructor(
         getCoinDetailUseCase(coinId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.e(PARAM_COIN_ID, "${result.data}")
                     _state.value = CoinDetailState(coin = result.data)
                 }
                 is Resource.Loading -> {

@@ -1,13 +1,13 @@
 package com.nosorae.labs.di_test.hilt.presentation.coin_list
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nosorae.labs.R
 import com.nosorae.labs.databinding.ActivityCoinListBinding
 import com.nosorae.labs.di_test.hilt.common.Constant.PARAM_COIN_ID
 import com.nosorae.labs.di_test.hilt.domain.model.Coin
@@ -22,6 +22,13 @@ class CoinListActivity : AppCompatActivity() {
     lateinit var binding: ActivityCoinListBinding
     lateinit var rvAdapter: CoinListAdapter
 
+    private val startActivityForResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            activityResult.data?.let { intent ->
+                // TODO 가져온 결과 처리
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCoinListBinding.inflate(layoutInflater)
@@ -31,9 +38,11 @@ class CoinListActivity : AppCompatActivity() {
         observeState()
 
     }
+
+
     private fun observeState() {
         viewModel.state.observe(this) { state ->
-            when(state) {
+            when (state) {
                 is CoinListState.Loading -> {
                     handleLoadingState()
                 }
@@ -63,13 +72,17 @@ class CoinListActivity : AppCompatActivity() {
 
     private fun initRecyclerView() = with(binding) {
         rvAdapter = CoinListAdapter { coinId ->
-            val intent = Intent(this@CoinListActivity, CoinDetailActivity::class.java)
-            intent.putExtra(PARAM_COIN_ID, coinId)
-            startActivity(intent)
+            startCoinDetailActivity(coinId)
         }
         rvCoins.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun startCoinDetailActivity(coinId: String) {
+        val intent = Intent(this@CoinListActivity, CoinDetailActivity::class.java)
+        intent.putExtra(PARAM_COIN_ID, coinId)
+        startActivityForResultLauncher.launch(intent)
     }
 }
