@@ -6,5 +6,5 @@ import com.nosorae.labs.di_test.hilt.domain.model.CoinDetail
 data class CoinDetailState(
     val isLoading: Boolean = false,
     val coin: CoinDetail? = null,
-    val error: String =""
+    val error: String? = null
 )
