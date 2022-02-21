@@ -1,10 +1,8 @@
 package com.nosorae.labs.di_test.hilt.presentation.coin_list
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.nosorae.labs.di_test.hilt.common.Constant.PARAM_COIN_ID
 import com.nosorae.labs.di_test.hilt.common.Resource
 import com.nosorae.labs.di_test.hilt.domain.use_case.get_coin.GetCoinsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CoinListViewModel @Inject constructor(
-    private val getCoinsUseCase: GetCoinsUseCase
+    private val getCoinsUseCase: GetCoinsUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableLiveData<CoinListState>(CoinListState.UnInitialized)

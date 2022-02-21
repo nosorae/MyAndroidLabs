@@ -3,6 +3,7 @@ package com.nosorae.labs.di_test.hilt.presentation.coin_list.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nosorae.labs.databinding.RvItemCoinListBinding
 import com.nosorae.labs.di_test.hilt.domain.model.Coin
@@ -43,4 +44,5 @@ class CoinListAdapter(
         coins.addAll(list)
         notifyDataSetChanged()
     }
+
 }

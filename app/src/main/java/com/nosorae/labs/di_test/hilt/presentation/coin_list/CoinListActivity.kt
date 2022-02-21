@@ -25,7 +25,7 @@ class CoinListActivity : AppCompatActivity() {
     private val startActivityForResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             activityResult.data?.let { intent ->
-                // TODO 가져온 결과 처리
+                Toast.makeText(this, "${intent.getStringExtra(PARAM_COIN_ID)}", Toast.LENGTH_SHORT).show()
             }
         }
 

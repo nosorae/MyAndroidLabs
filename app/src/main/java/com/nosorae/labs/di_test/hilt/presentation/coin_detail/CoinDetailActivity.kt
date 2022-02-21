@@ -1,5 +1,6 @@
 package com.nosorae.labs.di_test.hilt.presentation.coin_detail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,10 +19,19 @@ class CoinDetailActivity : AppCompatActivity() {
         binding = ActivityCoinDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         observeState()
+        initTextView()
     }
     private fun observeState() {
         viewModel.state.observe(this) { state ->
             binding.tvCoinDetail.text = state.coin.toString()
+        }
+    }
+    private fun initTextView() {
+        binding.tvCoinDetail.setOnClickListener {
+            Intent().putExtra(PARAM_COIN_ID, binding.tvCoinDetail.text.toString()).also { i ->
+                setResult(RESULT_OK, i)
+                finish()
+            }
         }
     }
 }
