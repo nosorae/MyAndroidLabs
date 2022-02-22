@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nosorae.labs">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".LabsApplication"
@@ -10,9 +10,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyAndroidLabs.NoActionBar">
+        android:theme="@style/Theme.MyAndroidLabs.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".background.service.ServiceActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".di_test.hilt.presentation.coin_detail.CoinDetailActivity"
             android:exported="true" />
@@ -25,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.compose.ConstraintLayoutActivity"
             android:exported="true">
@@ -52,11 +60,10 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".background.service.TimerService"
+        <service
+            android:name=".background.service.TimerService"
             android:description="Timer"
-            android:exported="false"/>
-
-
+            android:exported="false" />
     </application>
 
 </manifest>
