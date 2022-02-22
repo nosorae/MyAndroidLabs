@@ -26,11 +26,6 @@
             </intent-filter>
         </activity>
 
-
-
-
-
-
         <activity
             android:name=".ui.compose.ConstraintLayoutActivity"
             android:exported="true">
@@ -49,13 +44,19 @@
             android:label="@string/app_name" />
 
         <receiver
-            android:name=".background.LabsBroadcastReceiver"
+            android:name=".background.broadcast_receiver.LabsBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.nosorae.labs.MY_NOTIFICATION" />
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".background.service.TimerService"
+            android:description="Timer"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>

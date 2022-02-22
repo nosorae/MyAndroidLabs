@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.IntentFilter
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.nosorae.labs.background.LabsBroadcastReceiver
+import com.nosorae.labs.background.broadcast_receiver.LabsBroadcastReceiver
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
