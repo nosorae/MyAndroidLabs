@@ -62,7 +62,6 @@
 
         <service
             android:name=".background.service.TimerService"
-            android:description="Timer"
             android:exported="false" />
     </application>
 

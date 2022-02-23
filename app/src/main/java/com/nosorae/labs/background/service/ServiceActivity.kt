@@ -14,6 +14,7 @@ class ServiceActivity : AppCompatActivity() {
             this,
             TimerService::class.java
         ).also { intent ->
+            intent.putExtra("args", "노소래의 서비스 테스트!!")
             startService(intent)
         }
     }
