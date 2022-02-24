@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nosorae.labs.databinding.ActivityCoinListBinding
-import com.nosorae.labs.di_test.hilt.common.Constant.PARAM_COIN_ID
+import com.nosorae.labs.di_test.hilt.common.Constants.PARAM_COIN_ID
 import com.nosorae.labs.di_test.hilt.domain.model.Coin
 import com.nosorae.labs.di_test.hilt.presentation.coin_detail.CoinDetailActivity
 import com.nosorae.labs.di_test.hilt.presentation.coin_list.adapter.CoinListAdapter

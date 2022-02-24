@@ -2,7 +2,7 @@ package com.nosorae.labs.di_test.hilt.presentation.coin_detail
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.nosorae.labs.di_test.hilt.common.Constant.PARAM_COIN_ID
+import com.nosorae.labs.di_test.hilt.common.Constants.PARAM_COIN_ID
 import com.nosorae.labs.di_test.hilt.common.Resource
 import com.nosorae.labs.di_test.hilt.domain.model.CoinDetail
 import com.nosorae.labs.di_test.hilt.domain.use_case.get_coins.GetCoinDetailUseCase

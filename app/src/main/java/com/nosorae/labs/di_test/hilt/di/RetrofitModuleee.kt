@@ -1,7 +1,7 @@
 package com.nosorae.labs.di_test.hilt.di
 
 import com.nosorae.labs.BuildConfig
-import com.nosorae.labs.di_test.hilt.common.Constant.BASE_URL
+import com.nosorae.labs.di_test.hilt.common.Constants.BASE_URL
 import com.nosorae.labs.di_test.hilt.data.remote.CoinPaprikaApi
 import dagger.Module
 import dagger.Provides

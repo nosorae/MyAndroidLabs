@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import com.nosorae.labs.R
 import com.nosorae.labs.databinding.ActivityCoinDetailBinding
-import com.nosorae.labs.di_test.hilt.common.Constant.PARAM_COIN_ID
+import com.nosorae.labs.di_test.hilt.common.Constants.PARAM_COIN_ID
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,6 +1,8 @@
 package com.nosorae.labs.di_test.hilt.di
 
-import com.nosorae.labs.di_test.hilt.common.Constant.BASE_URL
+import android.app.Application
+import androidx.work.WorkManager
+import com.nosorae.labs.di_test.hilt.common.Constants.BASE_URL
 import com.nosorae.labs.di_test.hilt.data.remote.CoinPaprikaApi
 import com.nosorae.labs.di_test.hilt.data.repository.CoinRepositoryImpl
 import com.nosorae.labs.di_test.hilt.domain.repository.CoinRepository
@@ -30,6 +32,13 @@ object RetrofitModule  {
     @Singleton
     fun provideCoinRepository(api: CoinPaprikaApi): CoinRepository { // 위에서 힐트가 CoinPaprikaApi 어떻게 만들지 알려줬기 때문에 인자로 넣어준다.
        return CoinRepositoryImpl(api)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(app: Application): WorkManager {
+        return WorkManager.getInstance(app)
     }
 
 }

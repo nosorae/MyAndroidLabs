@@ -16,12 +16,9 @@
         <activity
             android:name=".background.service.ServiceActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
+
         <activity
             android:name=".di_test.hilt.presentation.coin_detail.CoinDetailActivity"
             android:exported="true" />
@@ -36,13 +33,7 @@
         </activity>
         <activity
             android:name=".ui.compose.ConstraintLayoutActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".ui.compose.ListActivity"
             android:exported="true" />
