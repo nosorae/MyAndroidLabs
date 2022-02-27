@@ -2,10 +2,7 @@ package com.nosorae.labs.clean_architecture.hilt.presentation.coin_list
 
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import com.nosorae.labs.clean_architecture.hilt.background.work_manager.work.TestWorker
 import com.nosorae.labs.clean_architecture.hilt.common.Constants.KEY_TEST_WORKER_DATA
 import com.nosorae.labs.clean_architecture.hilt.common.Resource
@@ -25,21 +22,39 @@ class CoinListViewModel @Inject constructor(
     private val _state = MutableLiveData<CoinListState>(CoinListState.UnInitialized)
     val state: LiveData<CoinListState> = _state
 
+    internal val workInfosByTag: LiveData<List<WorkInfo>>
+    internal val workInfosByChainName: LiveData<List<WorkInfo>>
+
+    companion object {
+        const val WORK_CHAIN_NAME = "work_chain_name"
+        const val WORK_INFO_BY_TAG = "workInfo by tag"
+    }
 
     init {
         getCoins()
-        timerWorkerChainTest()
+        //timerWorkerChainTest()
+        workInfosByChainName = workManager.getWorkInfosForUniqueWorkLiveData(WORK_CHAIN_NAME)
+        workInfosByTag = workManager.getWorkInfosByTagLiveData(WORK_INFO_BY_TAG)
     }
 
-    private fun timerWorkerChainTest() {
+    fun timerWorkerChainTest() {
         workManager
-            .beginWith(
+            .beginUniqueWork(
+                WORK_CHAIN_NAME,
+                ExistingWorkPolicy.REPLACE,
                 OneTimeWorkRequestBuilder<TestWorker>()
                     .setInputData(createDataByStringTest("1"))
                     .build()
             )
-            .then(OneTimeWorkRequest.from(TestWorker::class.java))
-            .then(OneTimeWorkRequest.from(TestWorker::class.java))
+            .then(
+                OneTimeWorkRequestBuilder<TestWorker>()
+                    .addTag(WORK_INFO_BY_TAG)
+                    .build()
+            )
+            .then(
+                OneTimeWorkRequestBuilder<TestWorker>()
+                    .build()
+            ) // 반복문으로 쓸 수도 있음! 보여주기식이라 비효율적이게 보일 수 있다.
             .enqueue() // 실질적인 work 의 시작은 enqueue
     }
 
@@ -49,6 +64,9 @@ class CoinListViewModel @Inject constructor(
             .putString(KEY_TEST_WORKER_DATA, input)
             .build()
 
+    fun cancelWorkRequest() {
+        workManager.cancelUniqueWork(WORK_CHAIN_NAME)
+    }
 
     private fun getCoins() {
         getCoinsUseCase().onEach { result ->

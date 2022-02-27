@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.nosorae.labs">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -54,6 +55,10 @@
         <service
             android:name="com.nosorae.labs.clean_architecture.hilt.background.service.TimerService"
             android:exported="false" />
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            tools:node="merge" />
     </application>
 
 </manifest>

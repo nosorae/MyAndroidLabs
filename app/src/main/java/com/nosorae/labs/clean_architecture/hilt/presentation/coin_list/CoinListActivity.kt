@@ -2,15 +2,19 @@ package com.nosorae.labs.clean_architecture.hilt.presentation.coin_list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.nosorae.labs.databinding.ActivityCoinListBinding
+import androidx.core.view.isGone
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.nosorae.labs.clean_architecture.hilt.common.Constants.LOG_TAG_TEST_WORKER
 import com.nosorae.labs.clean_architecture.hilt.common.Constants.PARAM_COIN_ID
 import com.nosorae.labs.clean_architecture.hilt.domain.model.Coin
 import com.nosorae.labs.clean_architecture.hilt.presentation.coin_detail.CoinDetailActivity
 import com.nosorae.labs.clean_architecture.hilt.presentation.coin_list.adapter.CoinListAdapter
+import com.nosorae.labs.databinding.ActivityCoinListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,10 +36,28 @@ class CoinListActivity : AppCompatActivity() {
         binding = ActivityCoinListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         initRecyclerView()
         observeState()
 
+
+        viewModel.workInfosByTag.observe(this) { listOfWorkInfo ->
+            Log.e(LOG_TAG_TEST_WORKER, "workInfosByTag :\n ${listOfWorkInfo.joinToString("\n") { "$it" }}")
+        }
+
+        viewModel.workInfosByChainName.observe(this) { listOfWorkInfo ->
+            listOfWorkInfo.forEach { workInfo ->
+            }
+
+        }
+
+        binding.btEnqueueWork.setOnClickListener {
+            viewModel.timerWorkerChainTest()
+        }
+
     }
+
+
 
 
     private fun observeState() {
