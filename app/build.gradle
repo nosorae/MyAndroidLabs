@@ -80,10 +80,13 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:1.2.0-alpha02"
 
 
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    implementation "androidx.lifecycle:lifecycle-service:2.4.1"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     // hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'

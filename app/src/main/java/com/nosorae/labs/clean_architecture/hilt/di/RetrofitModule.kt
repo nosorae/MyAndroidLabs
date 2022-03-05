@@ -6,6 +6,7 @@ import com.nosorae.labs.clean_architecture.hilt.common.Constants.BASE_URL
 import com.nosorae.labs.clean_architecture.hilt.data.remote.CoinPaprikaApi
 import com.nosorae.labs.clean_architecture.hilt.data.repository.CoinRepositoryImpl
 import com.nosorae.labs.clean_architecture.hilt.domain.repository.CoinRepository
+import com.nosorae.labs.clean_architecture.hilt.domain.use_case.get_coin.GetCoinsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,6 +33,12 @@ object RetrofitModule  {
     @Singleton
     fun provideCoinRepository(api: CoinPaprikaApi): CoinRepository { // 위에서 힐트가 CoinPaprikaApi 어떻게 만들지 알려줬기 때문에 인자로 넣어준다.
        return CoinRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCoinUseCase(repository: CoinRepository): GetCoinsUseCase {
+        return GetCoinsUseCase(repository)
     }
 
 

@@ -4,6 +4,8 @@
     package="com.nosorae.labs">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".LabsApplication"
@@ -15,16 +17,7 @@
         android:theme="@style/Theme.MyAndroidLabs.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.nosorae.labs.clean_architecture.hilt.background.service.ServiceActivity"
-            android:exported="true">
-        </activity>
-
-
-        <activity
-            android:name=".clean_architecture.hilt.presentation.coin_detail.CoinDetailActivity"
-            android:exported="true" />
-        <activity
-            android:name=".clean_architecture.hilt.presentation.coin_list.CoinListActivity"
+            android:name=".inbody.BeforeAfterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,18 +26,33 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".clean_architecture.hilt.background.service.ServiceActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".clean_architecture.hilt.presentation.coin_detail.CoinDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".clean_architecture.hilt.presentation.coin_list.CoinListActivity"
+            android:exported="true"></activity>
+        <activity
             android:name=".ui.compose.ConstraintLayoutActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".ui.compose.ListActivity"
             android:exported="true" />
         <activity
             android:name=".ui.compose.MainActivity"
             android:exported="true"
-            android:label="@string/app_name" />
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <receiver
-            android:name="com.nosorae.labs.clean_architecture.hilt.background.broadcast_receiver.LabsBroadcastReceiver"
+            android:name=".clean_architecture.hilt.background.broadcast_receiver.LabsBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.nosorae.labs.MY_NOTIFICATION" />
@@ -53,9 +61,8 @@
         </receiver>
 
         <service
-            android:name="com.nosorae.labs.clean_architecture.hilt.background.service.TimerService"
+            android:name=".clean_architecture.hilt.background.service.TimerService"
             android:exported="false" />
-
         <service
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             tools:node="merge" />
