@@ -27,13 +27,13 @@
         </activity>
         <activity
             android:name=".clean_architecture.hilt.background.service.ServiceActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".clean_architecture.hilt.presentation.coin_detail.CoinDetailActivity"
             android:exported="true" />
         <activity
             android:name=".clean_architecture.hilt.presentation.coin_list.CoinListActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.compose.ConstraintLayoutActivity"
             android:exported="true" />
