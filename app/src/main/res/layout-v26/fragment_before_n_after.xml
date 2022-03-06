@@ -67,7 +67,6 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:id="@+id/iv_picture"
-        android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

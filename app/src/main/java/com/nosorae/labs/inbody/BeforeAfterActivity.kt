@@ -6,11 +6,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
+import com.nosorae.labs.R
 import com.nosorae.labs.databinding.ActivityBeforeAfterBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -22,34 +24,33 @@ class BeforeAfterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBeforeAfterBinding
 
     // @RequiresApi(Build.VERSION_CODES.Q)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        log("A onCreate")
         binding = ActivityBeforeAfterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportFragmentManager.beginTransaction().replace(binding.flAfterContainer.id, BeforeNAfterFragment(), "").commit()
 
+        val windowWidth = applicationContext.resources.displayMetrics.widthPixels
+        binding.clCaptureFrame.layoutParams.width = (windowWidth * (0.9)).toInt()
+        val windowHeight = applicationContext.resources.displayMetrics.heightPixels
+        //binding.clCaptureFrame.layoutParams.height = (windowHeight * (0.9)).toInt()
     }
 
     override fun onResume() {
         super.onResume()
+        log("A onResume")
+
         binding.btSave.setOnClickListener {
-            val bitmap = binding.clBeforeContainer.drawToBitmap()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val bitmap = binding.clCaptureFrame.drawToBitmap()
                 mySave()
-            } else {
-                saveTheImageLegacyStyle(bitmap)
-            }
         }
     }
 
     private fun mySave() {
         var os: OutputStream?
-        val bitmap = binding.clBeforeContainer.drawToBitmap()
-
-        // MediaStore.Images.Media.insertImage(contentResolver, bitmap, "InBody", "")
-
+        val bitmap = binding.clCaptureFrame.drawToBitmap()
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME,
@@ -69,11 +70,8 @@ class BeforeAfterActivity : AppCompatActivity() {
             uri?.let {
                 os = resolver.openOutputStream(it)
                 os?.let { stream ->
-                    Log.e("asdf", uri.toString())
                     if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)) {
                         throw IOException("Failed to save bitmap.")
-                    } else {
-
                     }
                 } ?: throw IOException("Failed to get output stream")
             } ?: throw IOException("Failed to create new MediaStore record")
@@ -84,7 +82,6 @@ class BeforeAfterActivity : AppCompatActivity() {
             throw IOException(e)
         } finally {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.e("asdf", "save success")
                 contentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
                 uri?.let {
                     resolver.update(uri, contentValues, null, null)
@@ -132,6 +129,39 @@ class BeforeAfterActivity : AppCompatActivity() {
         val image = File(imagesDir, "filename")
         fos = FileOutputStream(image)
         fos.use {bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)}
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        log("A onStart")
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        log("A onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        log("A onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        log("A onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        log("A onDestroy")
+    }
+
+
+
+    private fun log(text: String) {
+        Log.e("lifeCycle tag", text)
     }
 
 }
