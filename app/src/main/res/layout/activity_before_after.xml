@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Test"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/cl_capture_frame"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
             android:id="@+id/fl_before_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/teal_200"
+            android:background="@drawable/bg_before_after_container"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fl_after_container"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:id="@+id/fl_after_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/black"
+            android:background="@drawable/bg_before_after_container"
             app:layout_constraintBottom_toBottomOf="@id/fl_before_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/fl_before_container"
@@ -56,10 +56,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_save"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="저장"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

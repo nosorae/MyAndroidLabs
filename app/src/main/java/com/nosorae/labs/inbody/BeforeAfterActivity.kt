@@ -1,21 +1,18 @@
 package com.nosorae.labs.inbody
 
+import android.Manifest
 import android.content.ContentValues
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.annotation.RequiresApi
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.drawToBitmap
-import com.nosorae.labs.R
 import com.nosorae.labs.databinding.ActivityBeforeAfterBinding
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 
@@ -23,44 +20,75 @@ import java.io.OutputStream
 class BeforeAfterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBeforeAfterBinding
 
-    // @RequiresApi(Build.VERSION_CODES.Q)
+    var afterOk = false
+    var beforeOk = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        log("A onCreate")
         binding = ActivityBeforeAfterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().replace(binding.flAfterContainer.id, BeforeNAfterFragment(), "").commit()
-
-        val windowWidth = applicationContext.resources.displayMetrics.widthPixels
-        binding.clCaptureFrame.layoutParams.width = (windowWidth * (0.9)).toInt()
-        val windowHeight = applicationContext.resources.displayMetrics.heightPixels
-        //binding.clCaptureFrame.layoutParams.height = (windowHeight * (0.9)).toInt()
+        disableSaveButton()
+        initBeforeAfterFragments()
     }
 
-    override fun onResume() {
-        super.onResume()
-        log("A onResume")
-
+    // TODO 버튼 색깔
+    private fun disableSaveButton() {
         binding.btSave.setOnClickListener {
-            val bitmap = binding.clCaptureFrame.drawToBitmap()
-                mySave()
+            Toast.makeText(this, "두 이미지 모두 선택해주세요.", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun mySave() {
+    private fun initBeforeAfterFragments() {
+        supportFragmentManager.apply {
+            beginTransaction().replace(binding.flBeforeContainer.id, BeforeNAfterFragment(), "전")
+                .commit()
+            beginTransaction().replace(binding.flAfterContainer.id, BeforeNAfterFragment(), "후")
+                .commit()
+
+
+            setFragmentResultListener(PARAM_BEFORE_RESULT,
+                this@BeforeAfterActivity) { requestKey, bundle ->
+                beforeOk = true
+                if (afterOk) enableSaveButton()
+            }
+            setFragmentResultListener(PARAM_AFTER_RESULT,
+                this@BeforeAfterActivity) { requestKey, bundle ->
+                afterOk = true
+                if (beforeOk) enableSaveButton()
+            }
+        }
+
+    }
+
+
+    private val requestWriteStoragePermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+            if (result) {
+                saveImageToGallery()
+            } else {
+                Toast.makeText(this, "권한을 허용해야 갤러리에 접근 가능합니다.", Toast.LENGTH_LONG).show()
+            }
+        }
+    private fun enableSaveButton() {
+        binding.btSave.setOnClickListener {
+            requestWriteStoragePermission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+    }
+
+
+    // 별도의 스레드에서 처리
+    private fun saveImageToGallery() {
         var os: OutputStream?
         val bitmap = binding.clCaptureFrame.drawToBitmap()
 
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME,
-                System.currentTimeMillis().toString() + "BeforeNAfter")
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "BeforeNAfter_0")
             put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM)
                 put(MediaStore.MediaColumns.IS_PENDING, 1)
             }
-
         }
 
         val resolver = contentResolver
@@ -92,76 +120,8 @@ class BeforeAfterActivity : AppCompatActivity() {
     }
 
 
-    //Make sure to call this function on a worker thread, else it will block main thread
-    @RequiresApi(Build.VERSION_CODES.Q)
-    fun saveImageInQ(bitmap: Bitmap): Uri? {
-        val filename = "IMG_${System.currentTimeMillis()}.jpg"
-        var fos: OutputStream? = null
-        var imageUri: Uri? = null
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-            put(MediaStore.Video.Media.IS_PENDING, 1)
-        }
-
-        //use application context to get contentResolver
-        val contentResolver = application.contentResolver
-
-        contentResolver.also { resolver ->
-            imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            fos = imageUri?.let { resolver.openOutputStream(it) }
-        }
-
-        fos?.use { bitmap.compress(Bitmap.CompressFormat.JPEG, 70, it) }
-
-        contentValues.clear()
-        contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
-        imageUri?.let { contentResolver.update(it, contentValues, null, null) }
-
-        return imageUri
+    companion object {
+        const val PARAM_BEFORE_RESULT = "PARAM_BEFORE_RESULT"
+        const val PARAM_AFTER_RESULT = "PARAM_AFTER_RESULT"
     }
-
-    //Make sure to call this function on a worker thread, else it will block main thread
-    fun saveTheImageLegacyStyle(bitmap:Bitmap){
-        var fos: OutputStream? = null
-        val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val image = File(imagesDir, "filename")
-        fos = FileOutputStream(image)
-        fos.use {bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)}
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        log("A onStart")
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-        log("A onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        log("A onStop")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        log("A onRestart")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        log("A onDestroy")
-    }
-
-
-
-    private fun log(text: String) {
-        Log.e("lifeCycle tag", text)
-    }
-
 }
