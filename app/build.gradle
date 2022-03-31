@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt' // for hilt, ~
     id 'dagger.hilt.android.plugin' // for hilt
+    id("com.apollographql.apollo3").version("3.2.0")
 }
 
 android {
@@ -55,6 +56,10 @@ android {
     viewBinding {
         enabled = true
     }
+
+    apollo {
+        packageName.set("com.nosorae.labs")
+    }
 }
 
 dependencies {
@@ -105,5 +110,8 @@ dependencies {
 
 
     implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+
+    implementation("com.apollographql.apollo3:apollo-runtime:3.2.0")
 
 }

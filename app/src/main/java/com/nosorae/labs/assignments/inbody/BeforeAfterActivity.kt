@@ -1,4 +1,4 @@
-package com.nosorae.labs.inbody
+package com.nosorae.labs.assignments.inbody
 
 import android.Manifest
 import android.content.ContentValues
@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity

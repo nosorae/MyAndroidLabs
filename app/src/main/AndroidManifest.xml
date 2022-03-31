@@ -20,7 +20,7 @@
         android:theme="@style/Theme.MyAndroidLabs.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".inbody.BeforeAfterActivity"
+            android:name="com.nosorae.labs.assignments.inbody.BeforeAfterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
