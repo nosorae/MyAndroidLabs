@@ -57,9 +57,7 @@ android {
         enabled = true
     }
 
-    apollo {
-        packageName.set("com.nosorae.labs")
-    }
+
 }
 
 dependencies {
@@ -117,4 +115,8 @@ dependencies {
     implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6'
 
 
+}
+
+apollo {
+    packageName.set("com.nosorae.labs")
 }
