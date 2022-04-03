@@ -1,9 +1,13 @@
 package com.nosorae.labs.assignments.inbody
 
+import android.Manifest
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import com.nosorae.labs.R
 import com.nosorae.labs.databinding.FragmentBeforeNAfterBinding
@@ -41,7 +45,7 @@ class BeforeNAfterFragment : Fragment(R.layout.fragment_before_n_after) {
                 }
 
             btCamera.setOnClickListener {
-                openCamera.launch()
+                openCamera.launch(null)
             }
         }
 
