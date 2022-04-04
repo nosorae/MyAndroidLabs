@@ -1,0 +1,12 @@
+query Locations {
+    locations {
+        info {
+            count
+        }
+        results {
+            id
+            name
+            type
+        }
+    }
+}
