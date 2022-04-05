@@ -125,6 +125,5 @@ dependencies {
 }
 
 apollo {
-    generateKotlinModels.set(true)
     packageName.set("com.nosorae.labs")
 }
