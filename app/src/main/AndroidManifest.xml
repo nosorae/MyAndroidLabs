@@ -20,20 +20,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAndroidLabs.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.canvas.CanvasTestActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".apollo.ApolloTestActivity"
-            android:exported="true">
-
-        </activity>
-
-
+            android:exported="true"></activity>
         <activity
             android:name=".assignments.inbody.BeforeAfterActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".clean_architecture.hilt.background.service.ServiceActivity"
             android:exported="true" />
@@ -53,15 +54,10 @@
             android:name=".ui.compose.MainActivity"
             android:exported="true"
             android:label="@string/app_name" />
-
-
-        <activity android:name=".listview.ListViewActivity"
+        <activity
+            android:name=".listview.ListViewActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver
