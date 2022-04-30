@@ -3,6 +3,7 @@ package com.nosorae.labs.listview
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.nosorae.labs.databinding.ActivityListViewBinding
+import com.nosorae.labs.ui.recyclerview.ExampleRecyclerView
 
 
 data class PhoneNum (val name: String, val phoneNum: String)
@@ -10,22 +11,21 @@ data class PhoneNum (val name: String, val phoneNum: String)
 
 class ListViewActivity: AppCompatActivity() {
     lateinit var binding: ActivityListViewBinding
-    lateinit var listAdapter: PhoneBookAdapter
+    lateinit var listAdapter: ExampleRecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = ArrayList<PhoneNum>()
-        for(i in 0..100) {
-            data.add(PhoneNum("노소래${i}", "010-2932-2323"))
-        }
+        listAdapter = ExampleRecyclerView(
+            callback = { item ->
+                // 클릭시 실행되는 코드를 작성
+              },
+             onLongClick =  { item, text ->
 
+            }
+        )
 
-        listAdapter = PhoneBookAdapter(data, this)
-
-
-
-        binding.list.adapter = listAdapter
     }
 }
