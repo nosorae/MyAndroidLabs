@@ -18,14 +18,6 @@ class ListViewActivity: AppCompatActivity() {
         binding = ActivityListViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        listAdapter = ExampleRecyclerView(
-            callback = { item ->
-                // 클릭시 실행되는 코드를 작성
-              },
-             onLongClick =  { item, text ->
-
-            }
-        )
 
     }
 }
