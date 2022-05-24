@@ -8,8 +8,11 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +32,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyAndroidLabsTheme {
-                DefaultPreView()
+                Screen()
             }
 
 //            val scaffoldState = rememberScaffoldState()
@@ -110,7 +113,7 @@ class MainActivity : ComponentActivity() {
                 .padding(top = 8.dp)
         ) {
             list.forEach {
-                Greeting3_1(text = it)
+                Greeting3_2(text = it)
             }
 
         }
@@ -140,45 +143,76 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        printLog("2 onCreateView")
-        return super.onCreateView(name, context, attrs)
+    @Composable
+    fun Greeting3_2(text: String) {
+        val expanded = remember { mutableStateOf(false) }
+        val extraPadding = if (expanded.value) 48.dp else 0.dp
+        Surface(
+            color = MaterialTheme.colors.primary,
+            modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+        ) {
 
+            Row(modifier = Modifier.padding(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = extraPadding)
+                ) {
+                    Text(text = "Hello")
+                    Text(text = text)
+                }
+
+                OutlinedButton(onClick = { expanded.value = !expanded.value }) {
+                    Text(text = if(expanded.value) "Show more" else "Show less")
+                }
+            }
+
+        }
     }
 
-    override fun onStart() {
-        super.onStart()
-        printLog("2 onStart")
+    @Composable
+    fun Greeting4(list: List<String> = List(1000) { "$it" }) {
+        LazyColumn() {
+            items(list) { name ->
+                Greeting3_2(name)
+            }
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        printLog("2 onResume")
+    @Composable
+    fun OnBoardingScreen(onContinueClick: () -> Unit) {
+        Surface {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Welcome to the Basics Codelab!")
+                Button(
+                    modifier = Modifier.padding(top = 24.dp),
+                    onClick = onContinueClick
+                ) {
+                    Text(text = "Continue")
+                }
+            }
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        printLog("2 onPause")
-    }
+    @Composable
+    fun Screen() {
+        var shouldShowOnBoarding by rememberSaveable {
+            mutableStateOf(true)
+        }
 
-    override fun onStop() {
-        super.onStop()
-        printLog("2 onStop")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        printLog("2 onRestart")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        printLog("2 onDestroy")
+        if (shouldShowOnBoarding) {
+            OnBoardingScreen {
+                shouldShowOnBoarding = false
+            }
+        } else {
+            Greeting4()
+        }
     }
 
 
-    private fun printLog(message: String) {
-        Log.e("activity's lifecylce", message)
-    }
 
 }
