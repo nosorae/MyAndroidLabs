@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/compose-model-1653402778858.xml" value="0.44886363636363635" />
+        <entry key="../../../../layout/compose-model-1653975660628.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/11260/AndroidStudioProjects/MyAndroidLabs/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.5442708333333334" />
         <entry key="..\:/Users/11260/AndroidStudioProjects/MyAndroidLabs/app/src/main/res/drawable/bg_before_after_container.xml" value="0.5442708333333334" />
         <entry key="..\:/Users/11260/AndroidStudioProjects/MyAndroidLabs/app/src/main/res/drawable/bg_before_after_text.xml" value="0.5442708333333334" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Users/11260/AndroidStudioProjects/MyAndroidLabs/app/src/main/res/layout/fragment_before_n_after.xml" value="0.45132743362831856" />
         <entry key="..\:/Users/11260/AndroidStudioProjects/MyAndroidLabs/app/src/main/res/layout/rv_item_coin_list.xml" value="0.5239583333333333" />
         <entry key="app/src/main/res/layout/activity_list_view.xml" value="0.22509057971014493" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_before_n_after.xml" value="0.16945288753799392" />
         <entry key="app/src/main/res/layout/item_example.xml" value="0.22509057971014493" />
         <entry key="app/src/main/res/layout/item_phone_num.xml" value="0.22509057971014493" />

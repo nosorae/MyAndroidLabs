@@ -1,10 +1,13 @@
 package com.nosorae.labs.ui.compose
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
@@ -25,6 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.palette.graphics.Palette
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.request.transition.Transition
+import com.nosorae.labs.R
+import com.nosorae.labs.databinding.ActivityMainBinding
 import com.nosorae.labs.ui.theme.MyAndroidLabsTheme
 import kotlinx.coroutines.launch
 
@@ -35,13 +44,64 @@ import kotlinx.coroutines.launch
  *
  */
 class MainActivity : ComponentActivity() {
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setContent {
-            MyAndroidLabsTheme {
-                Screen()
-            }
+            BasicLayoutComponents().BasicLayoutComponents()
+        }
+
+        val imgRrc = listOf<Int>(
+            R.drawable.esfp,
+            R.drawable.esfj2,
+            R.drawable.isfp,
+            R.drawable.istj
+        )
+        val views = listOf<View>(
+            binding.v1,
+            binding.v2,
+            binding.v3,
+            binding.v4
+        )
+        listOf<ImageView>(
+            binding.iv1,
+            binding.iv2,
+            binding.iv3,
+            binding.iv4
+        ).forEachIndexed { i, iv ->
+
+            Glide.with(iv)
+                .asBitmap()
+                .centerCrop()
+                .load(imgRrc[i])
+                .into(object : BitmapImageViewTarget(iv) {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap?>?
+                    ) {
+                        super.onResourceReady(resource, transition)
+                        Palette.from(resource).maximumColorCount(32).generate {
+                            Log.e("sorae.no", "${it?.dominantSwatch?.rgb}")
+                            it?.let {
+                                val dominantColor = it.dominantSwatch?.rgb
+
+
+                                views[i].setBackgroundColor(dominantColor!!)
+                            }
+                        }
+
+                    }
+                })
+        }
+
+
+//        setContent {
+//            MyAndroidLabsTheme {
+//                Screen()
+//            }
 
 //            val scaffoldState = rememberScaffoldState()
 //            var textFieldSate by remember {
@@ -85,7 +145,7 @@ class MainActivity : ComponentActivity() {
 //            Snackbar {
 //                Text(text = "hello snackbar")
 //            }
-        }
+
     }
 
     @Preview(showBackground = true, name = "Text preview", widthDp = 320)
@@ -242,7 +302,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    
+
     @Composable
     fun Card(name: String) {
         Card(
@@ -257,7 +317,7 @@ class MainActivity : ComponentActivity() {
     fun CardContent(name: String) {
         var expanded by rememberSaveable { mutableStateOf(false) }
 
-        Row (
+        Row(
             modifier = Modifier
                 .padding(12.dp)
                 .animateContentSize(
@@ -287,7 +347,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
             IconButton(onClick = { expanded = !expanded }) {
-                Icon(imageVector = if(expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, contentDescription = "")
+                Icon(
+                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                    contentDescription = ""
+                )
             }
         }
     }
