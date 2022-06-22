@@ -1,10 +1,7 @@
 package com.nosorae.labs.ui.compose
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -25,18 +22,21 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.palette.graphics.Palette
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.nosorae.labs.R
 import com.nosorae.labs.databinding.ActivityMainBinding
+import com.nosorae.labs.ui.compose.color_extractor.ColorExtractorAdapter
+import com.nosorae.labs.ui.compose.color_extractor.ImageItem
 import com.nosorae.labs.ui.compose.store.StoreItems
 import com.nosorae.labs.ui.theme.MyAndroidLabsTheme
-import kotlinx.coroutines.launch
 
 /**
  *  대부분의 Compose UI 요소는 modifier 매개변수를 선택적으로 허용
@@ -46,57 +46,85 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var adapter: ColorExtractorAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setContent {
-            StoreItems().Appbar()
+        adapter = ColorExtractorAdapter()
+        binding.rv.apply {
+            adapter = this@MainActivity.adapter
+            layoutManager = LinearLayoutManager(context)
         }
 
-        val imgRrc = listOf<Int>(
-            R.drawable.esfp,
-            R.drawable.esfj2,
-            R.drawable.isfp,
-            R.drawable.istj
+        adapter.submitList(
+            listOf(
+                ImageItem(
+                    R.drawable.entp,
+                    "ENTP"
+                ),
+                ImageItem(
+                    R.drawable.entj,
+                    "ENTJ"
+                ),
+                ImageItem(
+                    R.drawable.enfp,
+                    "ENFP"
+                ),
+                ImageItem(
+                    R.drawable.enfj,
+                    "ENFJ"
+                ),
+                ImageItem(
+                    R.drawable.estp,
+                    "ESTP"
+                ),
+                ImageItem(
+                    R.drawable.estj,
+                    "ESTJ"
+                ),
+                ImageItem(
+                    R.drawable.esfp,
+                    "ESFP"
+                ),
+                ImageItem(
+                    R.drawable.esfj,
+                    "ESFJ"
+                ),
+                ImageItem(
+                    R.drawable.intj,
+                    "INTJ"
+                ),
+                ImageItem(
+                    R.drawable.infp,
+                    "INFP"
+                ),
+                ImageItem(
+                    R.drawable.infj,
+                    "INFJ"
+                ),
+                ImageItem(
+                    R.drawable.istp,
+                    "ISTP"
+                ),
+                ImageItem(
+                    R.drawable.istj,
+                    "ISTJ"
+                ),
+                ImageItem(
+                    R.drawable.isfp,
+                    "ISFP"
+                ),
+                ImageItem(
+                    R.drawable.isfj,
+                    "ISFJ"
+                )
+            )
         )
-        val views = listOf<View>(
-            binding.v1,
-            binding.v2,
-            binding.v3,
-            binding.v4
-        )
-        listOf<ImageView>(
-            binding.iv1,
-            binding.iv2,
-            binding.iv3,
-            binding.iv4
-        ).forEachIndexed { i, iv ->
 
-            Glide.with(iv)
-                .asBitmap()
-                .centerCrop()
-                .load(imgRrc[i])
-                .into(object : BitmapImageViewTarget(iv) {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap?>?
-                    ) {
-                        super.onResourceReady(resource, transition)
-                        Palette.from(resource).maximumColorCount(32).generate {
-                            Log.e("sorae.no", "${it?.dominantSwatch?.rgb}")
-                            it?.let {
-                                val dominantColor = it.dominantSwatch?.rgb
-
-
-                                views[i].setBackgroundColor(dominantColor!!)
-                            }
-                        }
-
-                    }
-                })
-        }
 
 
 //        setContent {
