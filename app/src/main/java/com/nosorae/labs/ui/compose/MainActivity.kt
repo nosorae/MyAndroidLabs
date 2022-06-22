@@ -34,6 +34,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.transition.Transition
 import com.nosorae.labs.R
 import com.nosorae.labs.databinding.ActivityMainBinding
+import com.nosorae.labs.ui.compose.store.StoreItems
 import com.nosorae.labs.ui.theme.MyAndroidLabsTheme
 import kotlinx.coroutines.launch
 
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
         setContentView(binding.root)
 
         setContent {
-            BasicLayoutComponents().BasicLayoutComponents()
+            StoreItems().Appbar()
         }
 
         val imgRrc = listOf<Int>(
